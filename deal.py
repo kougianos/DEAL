@@ -17,10 +17,10 @@ def calc_rounds(list):
 	return rounds
 
 def calc_offer(suitcases, selection):
-	if(selection < round(sum(suitcases.values()) / len(suitcases))):
-		return 0.8*round(sum(suitcases.values()) / len(suitcases))
+	if(selection < round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))):
+		return 0.8*round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))
 	else:
-		return 1.2*round(sum(suitcases.values()) / len(suitcases))
+		return 1.2*round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))
 
 keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 values = [0.1, 1, 5, 10, 50, 100, 250, 500, 750, 1000, 2000, 4000, 8000, 10000, 15000, 20000, 30000, 50000, 75000, 100000]
@@ -52,24 +52,26 @@ while len(suitcases) > 0:
 	if(rounds == calc_rounds(suitcases)):
 		rounds = 0
 		round_name += 1
-		print(f"Round {round_name} is complete. The banker offers you {round(calc_offer(suitcases, selection_value))} to sell your suitcase and finish the game. Press 'y' to sell your suitcase, or 'n' to continue playing: ")
+		tmp = "${:,.2f}".format(round(calc_offer(suitcases, selection_value)))
+		print(f"Round {round_name} is complete. The banker offers you {tmp} to sell your suitcase and finish the game. Press 'y' to sell your suitcase, or 'n' to continue playing: ")
 		choice = input()
 		while(True):
 			if choice not in ['y', 'n']:
 				choice = input("Wrong input. Please press 'y' or 'n': ")
 			else:
 				if choice == 'y':
-					print(f"\n\nSOLD! You sold suitcase {selection}, which contained {selection_value}, for {round(calc_offer(suitcases, selection_value))}!")
+					tmp = "${:,.2f}".format(selection_value)
+					tmp2 = "${:,.2f}".format(calc_offer(suitcases, selection_value))
+					print(f"\n\nSOLD! You sold suitcase {selection}, which contained {tmp}, for {tmp2}!")
 					exit()
 				else:
+					if round_name == 6:
+						tmp = "${:,.2f}".format(selection_value)
+						print(f"\n\nYOU REACHED THE END WITHOUT ACCEPTING ANY OFFER FROM THE BANKER! Your suitcase contains {tmp}!")
+						exit()
 					print(f"Continuing to Round {round_name+1}")
 
 				break
-
-
-		print(selection_value)
-		print(round(sum(suitcases.values()) / len(suitcases)))
-		print(calc_offer(suitcases, selection_value))
 
 	opened_sc = input(f"Open one of the following suitcases:\n{', '.join([str(integer) for integer in suitcases.keys()])}\n")
 
@@ -86,14 +88,3 @@ while len(suitcases) > 0:
 			rounds += 1
 			break
 
-
-
-# print(list(suitcases.values))
-print(sum(suitcases.values()))
-print(round(sum(suitcases.values()) / len(suitcases)))
-
-
-# print(list(suitcases.keys()))
-# print(suitcases)
-# print(selection)
-# print(len(suitcases))
