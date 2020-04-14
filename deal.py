@@ -16,11 +16,25 @@ def calc_rounds(list):
 
 	return rounds
 
-def calc_offer(suitcases, selection):
-	if(selection < round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))):
-		return 0.8*round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))
+def calc_offer(suitcases, selection, round):
+	avg = (sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1)
+
+	smaller = 0
+	bigger = 0
+	if round in [1,2]:
+		for value in suitcases.values():
+			if value < avg:
+				smaller += 1
+			else:
+				bigger += 1
+	
+	if (smaller/bigger) > 2.0:
+		avg = 0.5*avg
+
+	if selection < avg:
+		return (0.8 * avg)
 	else:
-		return 1.2*round((sum(suitcases.values()) + int(selection)) / (len(suitcases) + 1))
+		return (1.2 * avg)
 
 keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 values = [0.1, 1, 5, 10, 50, 100, 250, 500, 750, 1000, 2000, 4000, 8000, 10000, 15000, 20000, 30000, 50000, 75000, 100000]
@@ -52,7 +66,7 @@ while len(suitcases) > 0:
 	if(rounds == calc_rounds(suitcases)):
 		rounds = 0
 		round_name += 1
-		tmp = "${:,.2f}".format(round(calc_offer(suitcases, selection_value)))
+		tmp = "${:,.2f}".format(round(calc_offer(suitcases, selection_value, round_name)))
 		print(f"Round {round_name} is complete. The banker offers you {tmp} to sell your suitcase and finish the game. Press 'y' to sell your suitcase, or 'n' to continue playing: ")
 		choice = input()
 		while(True):
@@ -61,7 +75,7 @@ while len(suitcases) > 0:
 			else:
 				if choice == 'y':
 					tmp = "${:,.2f}".format(selection_value)
-					tmp2 = "${:,.2f}".format(calc_offer(suitcases, selection_value))
+					tmp2 = "${:,.2f}".format(calc_offer(suitcases, selection_value, round_name))
 					print(f"\n\nSOLD! You sold suitcase {selection}, which contained {tmp}, for {tmp2}!")
 					exit()
 				else:
