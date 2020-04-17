@@ -31,7 +31,7 @@ def calc_offer(suitcases, selection, round):
 		if (smaller/bigger) > 2.0:
 			avg = 0.5*avg
 
-	# TODO: if round equals 6 dont run this block
+	# TODO: if round equals 5 or 6 dont run this block
 	if selection < avg:
 		return (0.8 * avg)
 	else:
@@ -51,11 +51,14 @@ Please pick one of the following suitcases:
 ''')
 
 while(True):
-	if int(selection) not in keys:
+	try:
+		if int(selection) not in keys:
+			selection = input("Wrong input. Please select a number from 1 to 20: ")
+		else:
+			print(f"Your selected suitcase is {selection}\n")
+			break
+	except:
 		selection = input("Wrong input. Please select a number from 1 to 20: ")
-	else:
-		print(f"Your selected suitcase is {selection}\n")
-		break
 
 selection_value = suitcases.pop(int(selection))
 
@@ -91,15 +94,17 @@ while len(suitcases) > 0:
 	opened_sc = input(f"Open one of the following suitcases:\n{', '.join([str(integer) for integer in suitcases.keys()])}\n")
 
 	while(True):
-		if int(opened_sc) not in suitcases.keys():
+		try:
+			if int(opened_sc) not in suitcases.keys():
+				opened_sc = input("Wrong input. Please select a valid suitcase: ")
+			else:
+				tmp = "${:,.2f}".format(suitcases.pop(int(opened_sc)))
+				print(f"You opened suitcase {opened_sc}, which contains {tmp}!")
+				rem_amounts = list(suitcases.values())
+				rem_amounts.append(selection_value)
+				rem_amounts.sort()
+				print(f'''Remaining amounts:\n{', '.join(["${:,.2f}".format(integer) for integer in rem_amounts])}\n''')
+				rounds += 1
+				break
+		except:
 			opened_sc = input("Wrong input. Please select a valid suitcase: ")
-		else:
-			tmp = "${:,.2f}".format(suitcases.pop(int(opened_sc)))
-			print(f"You opened suitcase {opened_sc}, which contains {tmp}!")
-			rem_amounts = list(suitcases.values())
-			rem_amounts.append(selection_value)
-			rem_amounts.sort()
-			print(f'''Remaining amounts:\n{', '.join(["${:,.2f}".format(integer) for integer in rem_amounts])}\n''')
-			rounds += 1
-			break
-
