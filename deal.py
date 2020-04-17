@@ -28,9 +28,10 @@ def calc_offer(suitcases, selection, round):
 			else:
 				bigger += 1
 	
-	if (smaller/bigger) > 2.0:
-		avg = 0.5*avg
+		if (smaller/bigger) > 2.0:
+			avg = 0.5*avg
 
+	# TODO: if round equals 6 dont run this block
 	if selection < avg:
 		return (0.8 * avg)
 	else:
