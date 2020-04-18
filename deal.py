@@ -31,11 +31,13 @@ def calc_offer(suitcases, selection, round):
 		if (smaller/bigger) > 2.0:
 			avg = 0.5*avg
 
-	# TODO: if round equals 5 or 6 dont run this block
-	if selection < avg:
-		return (0.8 * avg)
-	else:
-		return (1.2 * avg)
+	if round not in [5,6]:
+		if selection < avg:
+			return (0.8 * avg)
+		else:
+			return (1.2 * avg)
+
+	return avg
 
 keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 values = [0.1, 1, 5, 10, 50, 100, 250, 500, 750, 1000, 2000, 4000, 8000, 10000, 15000, 20000, 30000, 50000, 75000, 100000]
