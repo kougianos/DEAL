@@ -66,13 +66,25 @@ selection_value = suitcases.pop(int(selection))
 
 rounds = 0
 round_name = 0
+best_offer = 0
+worst_offer = float('inf')
+best_offer_round = worst_offer_round = 0
 
 while len(suitcases) > 0:
 
+	# Round end
 	if(rounds == calc_rounds(suitcases)):
 		rounds = 0
 		round_name += 1
-		tmp = "${:,.2f}".format(round(calc_offer(suitcases, selection_value, round_name)))
+		tmp = "${:,.2f}".format(calc_offer(suitcases, selection_value, round_name))
+
+		if calc_offer(suitcases, selection_value, round_name) >= best_offer:
+			best_offer = calc_offer(suitcases, selection_value, round_name)
+			best_offer_round = round_name
+		elif calc_offer(suitcases, selection_value, round_name) <= worst_offer:
+			worst_offer = calc_offer(suitcases, selection_value, round_name)
+			worst_offer_round = round_name
+
 		print(f"Round {round_name} is complete. The banker offers you {tmp} to sell your suitcase and finish the game. Press 'y' to sell your suitcase, or 'n' to continue playing: ")
 		choice = input()
 		while(True):
@@ -82,12 +94,20 @@ while len(suitcases) > 0:
 				if choice == 'y':
 					tmp = "${:,.2f}".format(selection_value)
 					tmp2 = "${:,.2f}".format(calc_offer(suitcases, selection_value, round_name))
+					best_offer = "${:,.2f}".format(best_offer)
+					worst_offer = "${:,.2f}".format(worst_offer)
 					print(f"\n\nSOLD! You sold suitcase {selection}, which contained {tmp}, for {tmp2}!")
+					print(f"\nBest offer from banker: {best_offer} at round {best_offer_round}")
+					print(f"Worst offer from banker: {worst_offer} at round {worst_offer_round}")
 					exit()
 				else:
 					if round_name == 6:
 						tmp = "${:,.2f}".format(selection_value)
+						best_offer = "${:,.2f}".format(best_offer)
+						worst_offer = "${:,.2f}".format(worst_offer)
 						print(f"\n\nYOU REACHED THE END WITHOUT ACCEPTING ANY OFFER FROM THE BANKER! Your suitcase contains {tmp}!")
+						print(f"\nBest offer from banker: {best_offer} at round {best_offer_round}")
+						print(f"Worst offer from banker: {worst_offer} at round {worst_offer_round}")
 						exit()
 					print(f"Continuing to Round {round_name+1}")
 
@@ -95,6 +115,7 @@ while len(suitcases) > 0:
 
 	opened_sc = input(f"Open one of the following suitcases:\n{', '.join([str(integer) for integer in suitcases.keys()])}\n")
 
+	# Open suitcase
 	while(True):
 		try:
 			if int(opened_sc) not in suitcases.keys():
