@@ -2,7 +2,7 @@
 DEAL mini game implemented in Python 3.
 
 ### Prerequisites
-Have python3 installed on your PC.
+Have python 2/3 installed on your PC.
 
 ### Instructions
 `git glone https://github.com/kougianos/DEAL.git` <br>
