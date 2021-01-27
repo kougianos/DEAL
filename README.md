@@ -1,5 +1,5 @@
 ## DEAL
-DEAL mini game implemented in Python 3.
+DEAL terminal mini game implemented in Python 3.
 
 ### Prerequisites
 Have python 2/3 installed on your PC.
