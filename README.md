@@ -32,7 +32,6 @@ $50,000.00<br>
 $75,000.00<br>
 $100,000.00<br>
 <br>
-
 At the start of the game the player must choose one suitcase for them, and then start opening the remaining suitcases revealing the hidden amounts.<br>
 At the end of each round the banker makes an offer to the player, to buy their suitcase and end the game.<br>
 The player may choose to sell their suitcase, or continue opening more suitcases.<br>
@@ -44,5 +43,5 @@ Round 4: Open 3 suitcases <br>
 Round 5: Open 2 suitcases <br>
 Round 6: Open 1 suitcase <br>
 <br>
-
+### Goal
 The player's goal is to leave with the largest possible amount, either by accepting a good offer from the banker, or by continuing until the end to reveal the amount hidden in their suitcase.
